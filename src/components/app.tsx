@@ -4,6 +4,8 @@ import { RecoilRoot } from "recoil";
 import { getConfig } from "utils/config";
 import { Layout } from "./layout";
 import { ConfigProvider } from "./config-provider";
+import Oauth from "./oauth";
+import DynamicModal from "./DynamicModal";
 
 const MyApp = () => {
   return (
@@ -18,7 +20,9 @@ const MyApp = () => {
           <SnackbarProvider>
             <ZMPRouter>
               <Layout />
+              <Oauth />
             </ZMPRouter>
+            <DynamicModal />
           </SnackbarProvider>
         </App>
       </ConfigProvider>

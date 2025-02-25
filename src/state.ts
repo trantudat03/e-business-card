@@ -10,12 +10,80 @@ import { Store } from "types/delivery";
 import { calcFinalPrice } from "utils/product";
 import { wait } from "utils/async";
 import categories from "../mock/categories.json";
+import { TCard, TUser } from "types/user";
+import { TSetting } from "types/setting";
+import { TApp } from "types/common";
 
-export const userState = selector({
+export const userState = atom<TUser>({
   key: "user",
-  get: async () => {
-    const { userInfo } = await getUserInfo({ autoRequestPermission: true });
-    return userInfo;
+  default: {
+    referralCode: "",
+    avatar: "",
+    name: "",
+    id: "",
+    phoneNumber: "",
+    userStatus: "USER_NOT_LOGIN",
+    userTokens: {
+      cmsAccessToken: "",
+      cmsRefreshToken: "",
+      zaloAccessToken: "",
+      zaloPhoneToken: "",
+    },
+    isLoading: false,
+    actionZalo: "",
+    shouldUpdate: false,
+  },
+});
+
+export const cardState = atom<TCard>({
+  key: "card", // Mỗi atom trong Recoil cần một key duy nhất
+  default: {
+    documentId: "",
+    id: "",
+    name: "",
+    company: "",
+    position: "",
+    phone: "",
+    email: "",
+    slogan: "",
+    socialMedia: [],
+    user: {
+      email: "",
+      id: "",
+      username: "",
+    }, // Để đúng kiểu object { id, username, email }
+    contacts: [], // Danh sách contacts theo TContact[]
+  },
+});
+export const settingState = atom<TSetting>({
+  key: "setting",
+  default: {
+    id: "",
+    attributes: {
+      url: "",
+      version: "",
+      title: "",
+      description: "",
+      createdAt: "",
+      updatedAt: "",
+      publishedAt: "",
+    },
+  },
+});
+
+// export const globalState = atom<TApp>({
+//   key: "app",
+//   default: {
+//     isLoading: false,
+//     error: [],
+//   },
+// });
+
+export const appState = atom<TApp>({
+  key: "app",
+  default: {
+    isLoading: false,
+    error: [],
   },
 });
 

@@ -6,18 +6,13 @@ import { BottomNavigation, Icon } from "zmp-ui";
 import { CartIcon } from "./cart-icon";
 
 const tabs: Record<string, MenuItem> = {
-  "/": {
-    label: "Trang chủ",
-    icon: <Icon icon="zi-home" />,
+  "/home": {
+    label: "Liên hệ",
+    icon: <Icon icon="zi-group" size={26} />,
   },
-  "/notification": {
-    label: "Thông báo",
-    icon: <Icon icon="zi-notif" />,
-  },
-  "/cart": {
-    label: "Giỏ hàng",
-    icon: <CartIcon />,
-    activeIcon: <CartIcon active />,
+  "/add-contact": {
+    label: "Thêm liên hệ",
+    icon: <Icon icon="zi-add-user" />,
   },
   "/profile": {
     label: "Cá nhân",
@@ -27,7 +22,11 @@ const tabs: Record<string, MenuItem> = {
 
 export type TabKeys = keyof typeof tabs;
 
-export const NO_BOTTOM_NAVIGATION_PAGES = ["/search", "/category", "/result"];
+export const NO_BOTTOM_NAVIGATION_PAGES = [
+  "/edit-profile",
+  "/category",
+  "/result",
+];
 
 export const Navigation: FC = () => {
   const keyboardVisible = useVirtualKeyboardVisible();

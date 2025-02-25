@@ -1,5 +1,7 @@
 import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
+import { settingService, userService, cardService } from "service";
+import * as service from "service";
 import { matchStatusBarColor } from "utils/device";
 import { EventName, events, Payment } from "zmp-sdk";
 import { useNavigate, useSnackbar } from "zmp-ui";
@@ -69,4 +71,158 @@ export function useToBeImplemented() {
       type: "success",
       text: "Chức năng dành cho các bên tích hợp phát triển...",
     });
+}
+
+export function usePOSTAPIUserQueryInfoCMS() {
+  const getData = async (params) => {
+    try {
+      const resp: any = await userService.UserQueryInfoCMS(params);
+
+      return resp?.data || [];
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
+  return {
+    post: getData,
+  };
+}
+
+export function useGetSetting(props?: { enabled?: boolean }) {
+  const [data, setData] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  let params: typeof props = {};
+  if (props) {
+    params = props;
+  }
+  if (!("enabled" in params)) {
+    params.enabled = true;
+  }
+
+  const getData = async () => {
+    let _;
+    try {
+      setIsLoading(true);
+      const resp: any = await settingService.GetSetting();
+
+      _ = resp.data;
+      setData(resp?.data || {});
+      setIsSuccess(true);
+    } catch {
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+    }
+    return _;
+  };
+  useEffect(() => {
+    if (params?.enabled) {
+      getData();
+    }
+  }, [params]);
+
+  return {
+    data,
+    isLoading,
+    isSuccess,
+    refetch: getData,
+  };
+}
+
+// export function useGetUserInformation(props?: { enabled?: boolean }) {
+//   const [data, setData] = useState<any>();
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [isSuccess, setIsSuccess] = useState(false);
+//   let params: typeof props = {};
+//   if (props) {
+//     params = props;
+//   }
+//   if (!("enabled" in params)) {
+//     params.enabled = true;
+//   }
+
+//   const getData = async () => {
+//     let _;
+//     try {
+//       setIsLoading(true);
+//       const resp: any = await userService.GetUserInformation();
+//       // resp.data = {};
+//       // resp.data.gender = "Male";
+//       // resp.data.dob = "2024-07-03";
+//       // resp.data.hasInitialQuestions = true;
+//       _ = resp.data;
+//       setData(resp?.data || {});
+//       setIsSuccess(true);
+//     } catch {
+//       setIsSuccess(false);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//     return _;
+//   };
+//   useEffect(() => {
+//     if (params?.enabled) {
+//       getData();
+//     }
+//   }, [params]);
+
+//   return {
+//     data,
+//     isLoading,
+//     isSuccess,
+//     refetch: getData,
+//   };
+// }
+
+// export function useLoginWithZalo() {
+//   const [data, setData] = useState<any>();
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [isSuccess, setIsSuccess] = useState(false);
+
+//   const execute = async (params: LoginWithZaloRequest) => {
+//     try {
+//       setIsLoading(true);
+//       const res = await loginWithZalo(params);
+
+//       setData(res?.data);
+//       setIsSuccess(true);
+//       setIsLoading(false);
+
+//       return res?.data;
+//     } catch {
+//       setIsSuccess(false);
+//       setIsLoading(false);
+//       return undefined;
+//     }
+//   };
+
+//   return {
+//     data,
+//     isLoading,
+//     isSuccess,
+//     execute: execute,
+//   };
+// }
+
+export function usePOSTAPICardUpdate() {
+  const [data, setData] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const getData = async (params) => {
+    try {
+      setIsLoading(true);
+      const resp: any = await cardService.CardUpdate(params);
+      setData(resp?.data || []);
+      setIsSuccess(true);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { data, isLoading, isSuccess, post: getData };
 }

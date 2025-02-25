@@ -1,0 +1,26 @@
+@import "../../css/variable.scss";
+
+.commonButton.zaui-btn.zaui-btn-primary {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+}
+
+.commonButton.zaui-btn.zaui-btn-tertiary {
+    border: 1px solid $text-red;
+    color: $text-red;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+}
+
+.commonButton.zaui-btn-secondary {
+    border: 1px solid $text-red;
+    color: $text-red;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+}
