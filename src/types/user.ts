@@ -1,3 +1,5 @@
+import { iteratee } from "lodash";
+
 export type TUserStatus =
   | "USER_NOT_LOGIN"
   | "USER_UNFOLLOWED_OA"
@@ -27,6 +29,7 @@ export interface TUser {
   isLoading: boolean;
   actionZalo: "accept" | "reject" | "";
   shouldUpdate: boolean;
+  ZaloIdByApp: string;
 }
 
 export interface TCard {
@@ -47,10 +50,18 @@ export interface TCard {
     id: string;
     username: string;
     email: string;
+    ZaloIdByApp: string;
   };
 
   // Quan hệ OneToMany với Contact
   contacts?: TContact[];
+  action?: string;
+}
+
+export interface TContact {
+  documentId: string;
+  id: number;
+  card: TCard;
 }
 
 // Interface cho component socialMedia
@@ -60,12 +71,12 @@ export interface TSocialMedia {
 }
 
 // Interface cho Contact (tùy chỉnh dựa vào schema của Contact)
-export interface TContact {
-  id: string;
-  name: string;
-  phone: string;
-  email?: string;
-}
+// export interface TContact {
+//   id: string;
+//   name: string;
+//   phone: string;
+//   email?: string;
+// }
 
 export type userStatus =
   | "USER_NOT_LOGIN"

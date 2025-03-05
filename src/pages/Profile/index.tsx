@@ -53,6 +53,7 @@ const Profile = () => {
                 }),
                 {
                   replace: ROUTE_PATH.CARD_INFO.replace,
+                  state: { from: "profile" },
                 }
               );
             }}
@@ -77,11 +78,11 @@ const Profile = () => {
           </div>
         </Box>
         <Button
-          variant="tertiary"
+          //   variant="tertiary"
           size="large"
           // onClick={onClickShare}
           // prefixIcon={<img src={shareIcon} alt="share zalo mini app" />}
-          className="button-share-zalo"
+          className="button-share-zalo bg-white border border-blue-500"
         >
           Chia sẻ ứng dụng
         </Button>

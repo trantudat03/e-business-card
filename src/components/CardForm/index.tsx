@@ -114,7 +114,7 @@ const CardForm = () => {
   }, [card]);
 
   useEffect(() => {
-    if (CardUpdate.isSuccess && CardUpdate.isLoading) {
+    if (CardUpdate.isSuccess && !CardUpdate.isLoading) {
       setCard((prev) => {
         return { ...prev, ...CardUpdate.data };
       });
@@ -373,23 +373,26 @@ const CardForm = () => {
           />
         </Box>
       </Box>
-      <Box className="editProfile__button--wrapper" flex>
-        <Button
-          className="editProfile__button--top cancelbtn"
-          variant="primary"
-          size="large"
+      <Box
+        className="editProfile__button--wrapper gap-4 text-base font-medium"
+        flex
+      >
+        <button
+          className="editProfile__button--top cancelbtn bg-white border border-blue-500 rounded-full text-blue-500"
+          //   variant="secondary"
+          //   size="large"
           onClick={onClickCancel}
         >
           Đóng
-        </Button>
-        <Button
-          className="editProfile__button--bottom submitbtn"
-          variant="tertiary"
-          size="large"
+        </button>
+        <button
+          className="editProfile__button--bottom submitbtn bg-blue-500 rounded-full py-3"
+          //   variant="primary"
+          //   size="large"
           onClick={handleSubmit(onClickSave)}
         >
           Hoàn tất
-        </Button>
+        </button>
       </Box>
     </div>
   );

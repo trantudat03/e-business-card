@@ -14,6 +14,7 @@ import { authorize } from "zmp-sdk";
 import { isEmpty } from "lodash";
 import * as hooks from "hooks";
 import { ROUTE_PATH } from "utils/constant";
+import GlobalLoading from "./GlobalLoading";
 const Oauth = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -75,6 +76,12 @@ const Oauth = () => {
   };
 
   const initOauth = async () => {
+    setUser((prev) => {
+      return {
+        ...prev,
+        isLoading: true,
+      };
+    });
     let status: Partial<UserInfoType["userStatus"]> = "USER_NOT_LOGIN";
     let userInfo: any = {};
     let userTokens = {} as any;
@@ -88,6 +95,9 @@ const Oauth = () => {
         id: userInfo?.id || "",
         idByOA: userInfo?.idByOA || "",
       })) || {};
+    useAuthStore.setState({
+      accessToken: userTokens?.CMSAccessToken,
+    });
     setCard((prev) => {
       return {
         ...prev,
@@ -109,6 +119,7 @@ const Oauth = () => {
           cmsAccessToken: userTokens?.CMSAccessToken,
           cmsRefreshToken: userTokens?.CMSRefreshToken,
         },
+        isLoading: false,
       };
     });
   };
@@ -118,14 +129,19 @@ const Oauth = () => {
   }, []);
 
   useEffect(() => {
-    if (user.id && location?.pathname.includes("/card-info")) {
+    if (
+      user.id &&
+      card.documentId &&
+      location?.pathname.includes("/card-info")
+    ) {
       return;
     } else {
       if (user.id) {
         navigate("/home");
       }
     }
-  }, [user]);
+    console.log("card oauth: ", card);
+  }, [user.id, card.documentId]);
 
   useEffect(() => {
     setUser((prev) => {
@@ -141,11 +157,7 @@ const Oauth = () => {
     // UpdateProfile();
   }, [user?.userTokens?.cmsAccessToken]);
 
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
-
-  return null;
+  return <>{user?.isLoading && <GlobalLoading />}</>;
 };
 
 export default Oauth;

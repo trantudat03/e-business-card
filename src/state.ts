@@ -55,6 +55,11 @@ export const cardState = atom<TCard>({
     contacts: [], // Danh sách contacts theo TContact[]
   },
 });
+
+export const contactState = atom<TCard[]>({
+  key: "contact",
+  default: [],
+});
 export const settingState = atom<TSetting>({
   key: "setting",
   default: {

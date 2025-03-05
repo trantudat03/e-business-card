@@ -8,5 +8,11 @@ export default () => {
     root: "./src",
     base: "",
     plugins: [tsconfigPaths(), react()],
+    esbuild: {
+      target: "es2020", // hoặc 'esnext'
+    },
+    build: {
+      target: "es2020", // hoặc 'esnext'
+    },
   });
 };

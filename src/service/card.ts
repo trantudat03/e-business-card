@@ -10,3 +10,12 @@ export const CardUpdate = (params: TCard) =>
       authApi: true,
     },
   });
+
+export const CheckAction = (carId: string) =>
+  request(`${env.VITE_WEB_URL_API}/api/func-customer/check-action`, {
+    method: "POST",
+    data: carId,
+    headers: {
+      authApi: true,
+    },
+  });
